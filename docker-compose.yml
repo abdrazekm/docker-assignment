@@ -1,0 +1,34 @@
+version: "3"
+services:
+
+        assignment-app1:
+                image: abdrazek/app1
+                ports:
+                        - "7777:8080"
+                container_name: container-app1
+                networks:
+                        - frontend
+                
+        assignment-app2:
+                build: ./App2
+                ports:
+                        - "8888:8080"
+                container_name: container-app2
+                networks:
+                        - frontend
+
+        nginx:
+                image: abdrazek/reverse-proxy
+                ports:
+                        - "80:80"
+                links: 
+                        - assignment-app1
+                        - assignment-app2
+                container_name: assignment-reverse-proxy
+                networks:
+                        - frontend
+
+networks:
+  frontend:
+          #driver: custom-driver-1
+
